@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Temperature Difference Request</title>
-    <form method="POST" action="/tempdifference">
-    Zipcode 1: <input type="text" name="zip1">
-    Zipcode 2: <input type="'text" name="zip2">
-    <input type="submit">
-    </form>
+	<meta charset="UTF-8">
+	<title>Temperature Difference Request</title>
 </head>
 <body>
-
+	<form action="/tempdifference" method="post">
+		Zipcode 1: <input name="zip1" type="text"> Zipcode 2: <input name="zip2" type="'text"> <input type="submit">
+	</form>
 </body>
 </html>
