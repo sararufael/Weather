@@ -9,14 +9,16 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/temperature', methods=['POST'])
-def temperature():
+@app.route('/currentconditions', methods=['POST'])
+def currentconditions():
     zipcode = request.form['zip']
     response = requests.get('https://api.openweathermap.org/data/2.5/weather?zip='+zipcode+',us&appid=637658b06ed3910bc1b22afd415ae4b4')
     json_object = response.json()
     temp_k = float(json_object['main']['temp'])
     temp_f = round((temp_k - 273.15) * 9/5 + 32, 2)
-    return render_template('temperature.html', temp=temp_f)
+    humidity = int(json_object['main']['humidity'])
+    wind = int(json_object['wind']['speed'])
+    return render_template('currentconditions.html', temp=temp_f, humidity=humidity, wind=wind, zipcode=zipcode)
 @app.route('/tempdifference', methods=['POST'])
 def tempdiffference():
     zip1 = request.form['zip1']
