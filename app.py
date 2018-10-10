@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 
 import requests
 
+import time
+
 app = Flask(__name__)
 
 
@@ -12,13 +14,17 @@ def index():
 @app.route('/currentconditions', methods=['POST'])
 def currentconditions():
     zipcode = request.form['zip']
-    response = requests.get('https://api.openweathermap.org/data/2.5/weather?zip='+zipcode+',us&appid=637658b06ed3910bc1b22afd415ae4b4')
-    json_object = response.json()
-    temp_k = float(json_object['main']['temp'])
+    current_response = requests.get('https://api.openweathermap.org/data/2.5/weather?zip='+zipcode+',us&appid=637658b06ed3910bc1b22afd415ae4b4')
+    forecast_response = requests.get('https://api.openweathermap.org/data/2.5/forecast?zip='+zipcode+',us&appid=637658b06ed3910bc1b22afd415ae4b4')
+    current_json_object = current_response.json()
+    forecast_json_object = forecast_response.json()
+    forecast_condition = forecast_json_object['list'][3]['weather'][0]['main']
+    forecast_time = time.ctime(forecast_json_object['list'][0]['dt'])
+    temp_k = float(current_json_object['main']['temp'])
     temp_f = round((temp_k - 273.15) * 9/5 + 32, 2)
-    humidity = int(json_object['main']['humidity'])
-    wind = int(json_object['wind']['speed'])
-    return render_template('currentconditions.html', temp=temp_f, humidity=humidity, wind=wind, zipcode=zipcode)
+    humidity = int(current_json_object['main']['humidity'])
+    wind = int(current_json_object['wind']['speed'])
+    return render_template('currentconditions.html', temp=temp_f, humidity=humidity, wind=wind, zipcode=zipcode, condition=forecast_condition, time=forecast_time)
 @app.route('/tempdifference', methods=['POST'])
 def tempdiffference():
     zip1 = request.form['zip1']

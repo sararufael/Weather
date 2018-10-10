@@ -5,9 +5,12 @@
 	<title>Current Weather Conditions</title>
 </head>
 <body>
-	<h1>Here's the weather at {{ zipcode }} :</h1>
-	<p>Current Temperature (F): {{ temp }} degrees.</p>
+	<h1>Here's the current weather report for {{ zipcode }} :</h1>
+	<p>Temperature (F): {{ temp }} degrees.</p>
 	<p>Humidity: {{ humidity }}%</p>
 	<p>Wind: {{ wind }} meters/sec</p>
+
+    <h1>Here's the forecast for {{ time }} at {{ zipcode }} :</h1>
+    <p>Condition: {{ condition }}</p>
 </body>
 </html>
