@@ -19,7 +19,7 @@ def currentconditions():
     current_json_object = current_response.json()
     forecast_json_object = forecast_response.json()
     forecast_condition = forecast_json_object['list'][3]['weather'][0]['main']
-    forecast_time = time.ctime(forecast_json_object['list'][0]['dt'])
+    forecast_time = time.strftime('%A, %B %d %I:%M %p',time.localtime(forecast_json_object['list'][0]['dt']))
     temp_k = float(current_json_object['main']['temp'])
     temp_f = round((temp_k - 273.15) * 9/5 + 32, 2)
     humidity = int(current_json_object['main']['humidity'])
