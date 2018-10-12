@@ -9,8 +9,11 @@
 	<p>Temperature (F): {{ temp }} degrees.</p>
 	<p>Humidity: {{ humidity }}%</p>
 	<p>Wind: {{ wind }} meters/sec</p>
-
-    <h1>Here's the forecast for {{ time }} at {{ zipcode }} :</h1>
-    <p>Condition: {{ condition }}</p>
+    {% for forecast in forecast_weather %}
+        <h1>Here's the forecast for {{ forecast['dt'] }} at {{ zipcode }} :</h1>
+        <p>Temperature: {{ forecast['temperature'] }}</p>
+        <p>Condition: {{ forecast['description'] }}</p>
+        <p>Icon: {{ forecast['icon'] }}</p>
+    {% endfor %}
 </body>
 </html>

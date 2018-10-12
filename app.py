@@ -16,15 +16,23 @@ def currentconditions():
     zipcode = request.form['zip']
     current_response = requests.get('https://api.openweathermap.org/data/2.5/weather?zip='+zipcode+',us&appid=637658b06ed3910bc1b22afd415ae4b4')
     forecast_response = requests.get('https://api.openweathermap.org/data/2.5/forecast?zip='+zipcode+',us&appid=637658b06ed3910bc1b22afd415ae4b4')
-    current_json_object = current_response.json()
-    forecast_json_object = forecast_response.json()
-    forecast_condition = forecast_json_object['list'][3]['weather'][0]['main']
-    forecast_time = time.strftime('%A, %B %d %I:%M %p',time.localtime(forecast_json_object['list'][0]['dt']))
-    temp_k = float(current_json_object['main']['temp'])
+    current_json = current_response.json()
+    forecast_json = forecast_response.json()
+    forecast_list = forecast_json['list']
+    forecast_weather = []
+    for i, char in enumerate(forecast_list):
+        weather = {
+            'dt': time.strftime('%A, %B %d %I:%M %p',time.localtime(forecast_list[i]['dt'])),
+            'temperature': round((forecast_list[i]['dt']- 273.15) * 9/5 + 32, 2),
+            'description': forecast_list[i]['weather'][0]['description'],
+            'icon': forecast_list[i]['weather'][0]['icon']
+         }
+        forecast_weather.append(weather)
+    temp_k = float(current_json['main']['temp'])
     temp_f = round((temp_k - 273.15) * 9/5 + 32, 2)
-    humidity = int(current_json_object['main']['humidity'])
-    wind = int(current_json_object['wind']['speed'])
-    return render_template('currentconditions.html', temp=temp_f, humidity=humidity, wind=wind, zipcode=zipcode, condition=forecast_condition, time=forecast_time)
+    humidity = int(current_json['main']['humidity'])
+    wind = int(current_json['wind']['speed'])
+    return render_template('currentconditions.html', temp=temp_f, humidity=humidity, wind=wind, zipcode=zipcode, condition=forecast_condition, time=forecast_time, forecast_weather=forecast_weather)
 @app.route('/tempdifference', methods=['POST'])
 def tempdiffference():
     zip1 = request.form['zip1']
