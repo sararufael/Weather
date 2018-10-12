@@ -32,7 +32,7 @@ def currentconditions():
     temp_f = round((temp_k - 273.15) * 9/5 + 32, 2)
     humidity = int(current_json['main']['humidity'])
     wind = int(current_json['wind']['speed'])
-    return render_template('currentconditions.html', temp=temp_f, humidity=humidity, wind=wind, zipcode=zipcode, condition=forecast_condition, time=forecast_time, forecast_weather=forecast_weather)
+    return render_template('currentconditions.html', temp=temp_f, humidity=humidity, wind=wind, zipcode=zipcode, forecast_weather=forecast_weather)
 @app.route('/tempdifference', methods=['POST'])
 def tempdiffference():
     zip1 = request.form['zip1']

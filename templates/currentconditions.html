@@ -13,7 +13,7 @@
         <h1>Here's the forecast for {{ forecast['dt'] }} at {{ zipcode }} :</h1>
         <p>Temperature: {{ forecast['temperature'] }}</p>
         <p>Condition: {{ forecast['description'] }}</p>
-        <p>Icon: {{ forecast['icon'] }}</p>
+        <img src="http://openweathermap.org/img/w/{{ forecast['icon'] }}.png" alt="Weather Icon">
     {% endfor %}
 </body>
 </html>
