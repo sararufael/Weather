@@ -6,12 +6,12 @@
 </head>
 <body>
 	<h1>Here's the current weather report for {{ zipcode }} :</h1>
-	<p>Temperature (F): {{ temp }} degrees.</p>
-	<p>Humidity: {{ humidity }}%</p>
-	<p>Wind: {{ wind }} meters/sec</p>
+	<p>Temperature: {{ current_weather['temperature'] }} F.</p>
+	<p>Humidity: {{ current_weather['humidity'] }}%</p>
+	<p>Wind: {{ current_weather['wind'] }} meters/sec</p>
     {% for forecast in forecast_weather %}
         <h1>Here's the forecast for {{ forecast['dt'] }} at {{ zipcode }} :</h1>
-        <p>Temperature: {{ forecast['temperature'] }}</p>
+        <p>Temperature: {{ forecast['temperature'] }} F</p>
         <p>Condition: {{ forecast['description'] }}</p>
         <img src="http://openweathermap.org/img/w/{{ forecast['icon'] }}.png" alt="Weather Icon">
     {% endfor %}
